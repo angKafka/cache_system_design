@@ -1,4 +1,4 @@
-package org.rdutta.cache_system_design.cache.utilities.quick_scope.custom;
+package org.rdutta.cache_system_design.cache.storage;
 
 
 import org.rdutta.cache_system_design.cache.exceptions.NotFoundException;
@@ -9,7 +9,7 @@ import org.rdutta.cache_system_design.cache.utilities.quick_scope.IStorage;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class PSStorage<Key, Value> implements IStorage<Key, Value> {
+public class PSStorage<Key, Value> implements IStorage<Key, Value> {
 
     Map<Key, Value> storage;
     private final Integer capacity;
@@ -37,6 +37,7 @@ public abstract class PSStorage<Key, Value> implements IStorage<Key, Value> {
         return storage.get(key);
     }
 
+    @Override
     public boolean isStorageFull() {
         return storage.size() == capacity;
     }

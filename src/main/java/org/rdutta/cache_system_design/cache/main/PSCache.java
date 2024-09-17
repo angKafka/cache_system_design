@@ -1,4 +1,4 @@
-package org.rdutta.cache_system_design.cache.utilities.quick_scope.custom;
+package org.rdutta.cache_system_design.cache.main;
 
 
 
@@ -11,7 +11,7 @@ import org.rdutta.cache_system_design.cache.utilities.quick_scope.ICache;
 import org.rdutta.cache_system_design.cache.utilities.quick_scope.IStorage;
 
 @Slf4j
-public abstract class PSCache<Key, Value>  implements ICache<Key, Value>  {
+public class PSCache<Key, Value>  implements ICache<Key, Value>  {
 
     private final EvictionPolicy<Key> evictionPolicy;
     private final IStorage<Key, Value> storage;
@@ -23,16 +23,22 @@ public abstract class PSCache<Key, Value>  implements ICache<Key, Value>  {
 
     @Override
     public void put(Key key, Value value) {
-        try{
+        try {
+            if (this.storage.isStorageFull()) {
+                Key keyToRemove = evictionPolicy.evictKey();
+                if (keyToRemove == null) {
+                    log.error(Messages.STORAGE_FULL, "No key available for eviction.");
+                    return;
+                }
+                storage.remove(keyToRemove);
+                log.warn("Evicted key: " + keyToRemove);
+            }
             this.storage.add(key, value);
             this.evictionPolicy.keyAccessed(key);
-        }catch (StorageFullException s){
+        } catch (StorageFullException s) {
             log.error(Messages.STORAGE_FULL, s);
-            Key keyToRemove = evictionPolicy.evictKey();
-            if (keyToRemove == null) throw new NotFoundException(Messages.KEY_NOT_FOUND_EXCEPTION);
-            storage.remove(keyToRemove);
-            System.out.println("Creating space by evicting item..." + keyToRemove);
-            put(key, value);
+        } catch (NotFoundException e) {
+            log.error(Messages.KEY_NOT_FOUND_EXCEPTION, e);
         }
     }
 

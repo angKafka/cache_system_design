@@ -1,4 +1,4 @@
-package org.rdutta.cache_system_design.cache.utilities.quick_scope.custom;
+package org.rdutta.cache_system_design.cache.policy;
 
 import org.rdutta.cache_system_design.cache.algorithm.linkedlist.DoublyLinkedList;
 import org.rdutta.cache_system_design.cache.algorithm.linkedlist.Node;
@@ -7,7 +7,7 @@ import org.rdutta.cache_system_design.cache.utilities.quick_scope.EvictionPolicy
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class PSEvictionPolicy<Key> implements EvictionPolicy<Key> {
+public class PSEvictionPolicy<Key> implements EvictionPolicy<Key> {
 
     private final DoublyLinkedList<Key> dll;
     private final Map<Key, Node<Key>> mapper;
@@ -23,7 +23,7 @@ public abstract class PSEvictionPolicy<Key> implements EvictionPolicy<Key> {
             dll.detachNode(mapper.get(key));
             dll.attachNodeAtLast(mapper.get(key));
         }else{
-            Node<Key> node = new Node<>(key);
+            Node<Key> node = dll.attachElementAtLast(key);
             mapper.put(key, node);
         }
     }
@@ -31,10 +31,11 @@ public abstract class PSEvictionPolicy<Key> implements EvictionPolicy<Key> {
     @Override
     public Key evictKey() {
         Node<Key> head = dll.getHeadNode();
-        if(head == null){
+        if (head == null) {
             return null;
         }
         dll.detachNode(head);
+        mapper.remove(head.getElement());
         return head.getElement();
     }
 }
