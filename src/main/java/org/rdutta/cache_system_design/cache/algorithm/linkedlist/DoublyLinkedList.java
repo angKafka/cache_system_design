@@ -47,17 +47,15 @@ public class DoublyLinkedList<E> {
     }
 
     public Node<E> getHeadNode() throws NoSuchElementException {
-        Node<E> item = null;
-        if(isItemExists()){
-            return null;
+        if (!isItemExists()) {
+            throw new NoSuchElementException(Messages.KEY_NOT_FOUND_EXCEPTION);
         }
         return head.next;
     }
 
     public Node<E> getTailNode() throws NoSuchElementException {
-        Node<E> item = null;
-        if(isItemExists()){
-            return null;
+        if (!isItemExists()) {
+            throw new NoSuchElementException(Messages.KEY_NOT_FOUND_EXCEPTION);
         }
         return tail.prev;
     }

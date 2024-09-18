@@ -26,10 +26,11 @@ public class CacheSystemDesignApplication {
 
         // Access some elements
         System.out.println("Cache value for key 1: " + cache.get("1"));
+        System.out.println("Cache value for key 2: " + cache.get("2"));
 
         // Insert a new element, which should evict the least recently used entry
         cache.put("4", "D");
-        System.out.println("Cache value for key 2: " + cache.get("2"));
+        System.out.println("Cache value for key 3: " + cache.get("3"));
     }
 
 }

@@ -7,7 +7,7 @@ import org.rdutta.cache_system_design.cache.storage.PSStorage;
 
 public class CacheFactory<Key, Value> {
     public PSCache<Key, Value> defaultCache(final Integer capacity) {
-        return new PSCache<>(new PSEvictionPolicy<>(),
+        return new PSCache<>(new PSEvictionPolicy<>(3),
                 new PSStorage<>(capacity));
     }
 }

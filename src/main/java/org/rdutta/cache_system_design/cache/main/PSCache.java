@@ -23,7 +23,7 @@ public class PSCache<Key, Value>  implements ICache<Key, Value>  {
 
     @Override
     public void put(Key key, Value value) {
-        try {
+        try{
             if (this.storage.isStorageFull()) {
                 Key keyToRemove = evictionPolicy.evictKey();
                 if (keyToRemove == null) {
@@ -31,7 +31,7 @@ public class PSCache<Key, Value>  implements ICache<Key, Value>  {
                     return;
                 }
                 storage.remove(keyToRemove);
-                log.warn("Evicted key: " + keyToRemove);
+                log.info("Evicted key: " + keyToRemove);
             }
             this.storage.add(key, value);
             this.evictionPolicy.keyAccessed(key);
