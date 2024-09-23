@@ -17,4 +17,6 @@ public interface ICache<Key, Value> {
      * @return the value associated with the key, or null if the key is not found
      */
     Value get(Key key);
+
+    void remove(Key key);
 }

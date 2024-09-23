@@ -53,4 +53,9 @@ public class PSCache<Key, Value>  implements ICache<Key, Value>  {
             return null;
         }
     }
+
+    @Override
+    public void remove(Key key) {
+        storage.remove(key);
+    }
 }

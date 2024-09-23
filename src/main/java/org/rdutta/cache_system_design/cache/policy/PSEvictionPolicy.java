@@ -7,9 +7,12 @@ import org.rdutta.cache_system_design.cache.exceptions.NotFoundException;
 import org.rdutta.cache_system_design.cache.exceptions.StorageFullException;
 import org.rdutta.cache_system_design.cache.utilities.messages.Messages;
 import org.rdutta.cache_system_design.cache.utilities.quick_scope.EvictionPolicy;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 @Slf4j
 public class PSEvictionPolicy<Key> implements EvictionPolicy<Key> {
